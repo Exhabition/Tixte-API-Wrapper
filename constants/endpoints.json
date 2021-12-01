@@ -1,0 +1,8 @@
+{
+    "BASE_URL": "https://api.tixte.com/v1",
+    
+    "ACCOUNT_ENDPOINT": "/users/@me",
+    "UPLOAD_ENDPOINT": "/upload",
+    "DELETE_ENDPOINT": "/users/@me/uploads",
+    "GET_UPLOAD_ENDPOINT": "/users/@me/uploads"
+}

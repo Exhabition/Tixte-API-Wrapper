@@ -1,0 +1,32 @@
+{
+  "name": "tixte",
+  "version": "1.0.0",
+  "description": "A simple JS wrapper around the Tixte API",
+  "main": "src/index.js",
+  "types": "types/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Exhabition/trace.moe.js.git"
+  },
+  "keywords": [
+    "tixte",
+    "API",
+    "wrapper"
+  ],
+  "author": "Exhabition",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Exhabition/tixte/issues"
+  },
+  "homepage": "https://github.com/Exhabition/tixte#readme",
+  "dependencies": {
+    "axios": "^0.21.4",
+    "form-data": "^4.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.4.3"
+  }
+}
