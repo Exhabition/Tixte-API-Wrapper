@@ -64,17 +64,6 @@ class Client {
         const uploadResponse = await del(`${DELETE_ENDPOINT}/${id}`).catch(error => error.response);
         return uploadResponse.data;
     }
-
-    /**
-     * @param {String} id The unique ID of the file you want to retrieve
-     * @returns {GetFileResponse}
-     */
-    async getFile(id) {
-        if (!id || typeof id !== "string") return new TypeError(`[getFile] Expected 'id' to be a string, got ${typeof id}`);
-
-        const uploadResponse = await get(`${GET_UPLOAD_ENDPOINT}/${id}`).catch(error => error.response);
-        return uploadResponse.data;
-    }
 }
 
 module.exports = { Client };

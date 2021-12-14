@@ -67,11 +67,6 @@ declare interface DeleteFileResponse {
   };
 }
 
-declare interface GetFileResponse {
-  success: boolean;
-  data: {};
-}
-
 declare interface TixteUser {
   id: string,
   username: string,
