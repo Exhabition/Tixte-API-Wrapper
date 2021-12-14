@@ -35,11 +35,12 @@ declare interface AccountDetails {
 
 declare interface UploadOptions {
   extension: string;
-  fileName: string;
+  filename: string;
 }
 
 declare interface UploadFileResponse {
   success: boolean;
+  size: number;
   data: {
     id: string;
     name: string;
@@ -47,6 +48,11 @@ declare interface UploadFileResponse {
     filename: string;
     extension: string;
     domain: string;
+    type: number;
+    permissions: [{
+      user: TixteUser,
+      access_level: number,
+    }]
     url: string;
     direct_url: string;
     deletion_url: string;
@@ -64,4 +70,10 @@ declare interface DeleteFileResponse {
 declare interface GetFileResponse {
   success: boolean;
   data: {};
+}
+
+declare interface TixteUser {
+  id: string,
+  username: string,
+  avatar: string,
 }
