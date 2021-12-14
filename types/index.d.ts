@@ -3,6 +3,8 @@ declare module "tixte" {
     constructor(private apiKey: string);
 
     getAccountInfo(): Promise<AccountDetails>;
+    getDomains(): Promise<DomainResponse>;
+    getSize(): Promise<SizeResponse>;
 
     uploadFile(
       buffer: Buffer,
@@ -46,6 +48,15 @@ declare interface DomainResponse {
         uploads: number;
       }
     ];
+  };
+}
+
+declare interface SizeResponse {
+  success: boolean;
+  data: {
+    user: number;
+    limit: number;
+    premium_tier: number;
   };
 }
 

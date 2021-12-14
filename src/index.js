@@ -4,7 +4,7 @@ const FormData = require("form-data");
 
 // Constants
 const { BASE_URL, ACCOUNT_ENDPOINT, UPLOAD_ENDPOINT, FILE_ENDPOINT,
-    DOMAINS_ENDPOINT } = require("../constants/endpoints.json");
+    DOMAINS_ENDPOINT, SIZE_ENDPOINT } = require("../constants/endpoints.json");
 
 // Config
 const axiosConfig = create({ baseURL: BASE_URL });
@@ -34,6 +34,15 @@ class Client {
      */
     async getDomains() {
         const result = await get(DOMAINS_ENDPOINT).catch(error => error.response);
+        return result.data;
+    }
+
+    /**
+     * Gets total uploaded file size of user
+     * @returns {SizeResponse}
+     */
+    async getSize() {
+        const result = await get(SIZE_ENDPOINT).catch(error => error.response);
         return result.data;
     }
 
