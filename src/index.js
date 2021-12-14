@@ -6,18 +6,16 @@ const FormData = require("form-data");
 const { BASE_URL, ACCOUNT_ENDPOINT, UPLOAD_ENDPOINT, FILE_ENDPOINT } = require("../constants/endpoints.json");
 
 // Config
-const axiosConfig = create({
-    baseURL: BASE_URL,
-});
+const axiosConfig = create({ baseURL: BASE_URL });
 const { get, post, delete: del, patch } = axiosConfig;
 
 class Client {
     constructor(apiKey) {
-        if (apiKey) {
-            this._apiKey = apiKey;
+        if (typeof apiKey !== "string") return new TypeError(`[Client] Expected API key, got ${typeof apiKey}`);
 
-            axiosConfig.defaults.headers.common["Authorization"] = this._apiKey;
-        }
+        this._apiKey = apiKey;
+
+        axiosConfig.defaults.headers.common["Authorization"] = this._apiKey;
     }
 
     /**
@@ -63,8 +61,8 @@ class Client {
     async updateFile(id, fileInfo) {
         if (!id || typeof id !== "string") return new TypeError(`[updateFile] Expected 'id' to be a string, got ${typeof id}`);
         if (!fileInfo || typeof fileInfo !== "object") return new TypeError(`[updateFile] Expected 'fileInfo' to be an object, got ${typeof options}`);
-        if (fileInfo.name && typeof fileInfo.name !== "string") return new TypeError(`[uploadFile] Expected 'fileInfo.name' to be a string, got ${typeof buffer}`);
-        if (fileInfo.extension && typeof fileInfo.extension !== "string") return new TypeError(`[uploadFile] Expected 'fileInfo.extension' to be a string, got ${typeof buffer}`);
+        if (fileInfo.name && typeof fileInfo.name !== "string") return new TypeError(`[updateFile] Expected 'fileInfo.name' to be a string, got ${typeof buffer}`);
+        if (fileInfo.extension && typeof fileInfo.extension !== "string") return new TypeError(`[updateFile] Expected 'fileInfo.extension' to be a string, got ${typeof buffer}`);
 
         const uploadResponse = await patch(`${FILE_ENDPOINT}/${id}`, fileInfo).catch(error => error.response);
         return uploadResponse.data;

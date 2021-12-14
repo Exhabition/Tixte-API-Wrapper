@@ -1,6 +1,6 @@
 declare module "tixte" {
   class Client {
-    constructor(private apiKey?: string);
+    constructor(private apiKey: string);
 
     getAccountInfo(): Promise<AccountDetails>;
 
