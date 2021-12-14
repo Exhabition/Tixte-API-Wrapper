@@ -34,8 +34,9 @@ class Client {
      * @param {Buffer} buffer A valid buffer representing a file
      * @param {Object} options An object with optional settings
      * @param {String} domain The domain the image should be uploaded to
-     * @param {String} options.filename The filename to upload the file under
-     * @param {String} options.extension The extension of the file
+     * @param {Object} [options] Optional options to use while uploading the file
+     * @param {String} [options.filename = Date.now()] The filename to upload the file under
+     * @param {String} [options.extension = png] The extension of the file
      * @returns {UploadFileResponse}
      */
     async uploadFile(buffer, domain, options) {
@@ -43,12 +44,10 @@ class Client {
         if (!domain || typeof domain !== "string") return new TypeError(`[uploadFile] Expected 'domain' to be a string, got ${typeof buffer}`);
         if (options && typeof options !== "object") return new TypeError(`[uploadFile] Expected 'options' to be an object, got ${typeof options}`);
 
-        // TODO: Upload file under supplied name in options
         const formData = new FormData()
-        formData.append("file", buffer, `${options.filename}.${options.extension}`);
+        formData.append("file", buffer, `${options.filename || Date.now()}.${options.extension || "png"}`);
 
         const uploadResponse = await post(UPLOAD_ENDPOINT, formData, {
-            data: formData,
             headers: { ...formData.getHeaders(), domain },
         }).catch(error => error.response);
 
