@@ -3,14 +3,13 @@ const { create } = require("axios").default;
 const FormData = require("form-data");
 
 // Constants
-const { BASE_URL, ACCOUNT_ENDPOINT, UPLOAD_ENDPOINT, DELETE_ENDPOINT,
-    GET_UPLOAD_ENDPOINT } = require("../constants/endpoints.json");
+const { BASE_URL, ACCOUNT_ENDPOINT, UPLOAD_ENDPOINT, FILE_ENDPOINT } = require("../constants/endpoints.json");
 
 // Config
 const axiosConfig = create({
     baseURL: BASE_URL,
 });
-const { get, post, delete: del } = axiosConfig;
+const { get, post, delete: del, patch } = axiosConfig;
 
 class Client {
     constructor(apiKey) {
@@ -55,13 +54,30 @@ class Client {
     }
 
     /**
+     * @param {String} id The unique ID of the file you want to update
+     * @param {Object} fileInfo The new file information
+     * @param {String} [name] Updated name of the file
+     * @param {String} [extension] Updated extension of the file
+     * @returns {UpdateFileResponse}
+     */
+    async updateFile(id, fileInfo) {
+        if (!id || typeof id !== "string") return new TypeError(`[updateFile] Expected 'id' to be a string, got ${typeof id}`);
+        if (!fileInfo || typeof fileInfo !== "object") return new TypeError(`[updateFile] Expected 'fileInfo' to be an object, got ${typeof options}`);
+        if (fileInfo.name && typeof fileInfo.name !== "string") return new TypeError(`[uploadFile] Expected 'fileInfo.name' to be a string, got ${typeof buffer}`);
+        if (fileInfo.extension && typeof fileInfo.extension !== "string") return new TypeError(`[uploadFile] Expected 'fileInfo.extension' to be a string, got ${typeof buffer}`);
+
+        const uploadResponse = await patch(`${FILE_ENDPOINT}/${id}`, fileInfo).catch(error => error.response);
+        return uploadResponse.data;
+    }
+
+    /**
      * @param {String} id The unique ID of the file you want to delete
      * @returns {DeleteFileResponse}
      */
     async deleteFile(id) {
         if (!id || typeof id !== "string") return new TypeError(`[deleteFile] Expected 'id' to be a string, got ${typeof id}`);
 
-        const uploadResponse = await del(`${DELETE_ENDPOINT}/${id}`).catch(error => error.response);
+        const uploadResponse = await del(`${FILE_ENDPOINT}/${id}`).catch(error => error.response);
         return uploadResponse.data;
     }
 }

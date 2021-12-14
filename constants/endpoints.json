@@ -3,6 +3,5 @@
     
     "ACCOUNT_ENDPOINT": "/users/@me",
     "UPLOAD_ENDPOINT": "/upload",
-    "DELETE_ENDPOINT": "/users/@me/uploads",
-    "GET_UPLOAD_ENDPOINT": "/users/@me/uploads"
+    "FILE_ENDPOINT": "/users/@me/uploads"
 }
