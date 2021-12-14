@@ -56,8 +56,8 @@ class Client {
     /**
      * @param {String} id The unique ID of the file you want to update
      * @param {Object} fileInfo The new file information
-     * @param {String} [name] Updated name of the file
-     * @param {String} [extension] Updated extension of the file
+     * @param {String} [fileInfo.name] Updated name of the file
+     * @param {String} [fileInfo.extension] Updated extension of the file
      * @returns {UpdateFileResponse}
      */
     async updateFile(id, fileInfo) {
