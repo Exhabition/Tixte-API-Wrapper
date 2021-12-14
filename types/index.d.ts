@@ -9,9 +9,11 @@ declare module "tixte" {
       domain: string,
       options?: UploadOptions
     ): Promise<UploadFileResponse>;
-    updateFile(id: string, fileInfo: UpdateFileInfo): Promise<UpdateFileResponse>
+    updateFile(
+      id: string,
+      fileInfo: UpdateFileInfo
+    ): Promise<UpdateFileResponse>;
     deleteFile(id: string): Promise<DeleteFileResponse>;
-    getFile(id: string): Promise<GetFileResponse>;
   }
 }
 
@@ -31,6 +33,19 @@ declare interface AccountDetails {
     avatar?: string;
     upload_region: string;
     last_login: string;
+  };
+}
+
+declare interface DomainResponse {
+  success: boolean;
+  data: {
+    domains: [
+      {
+        name: string;
+        owner: string;
+        uploads: number;
+      }
+    ];
   };
 }
 
@@ -55,10 +70,12 @@ declare interface UploadFileResponse {
     extension: string;
     domain: string;
     type: number;
-    permissions: [{
-      user: TixteUser,
-      access_level: number,
-    }]
+    permissions: [
+      {
+        user: TixteUser;
+        access_level: number;
+      }
+    ];
     url: string;
     direct_url: string;
     deletion_url: string;
@@ -76,7 +93,7 @@ declare interface UpdateFileResponse {
     name: string;
     size: number;
     uploaded_at: string;
-  }
+  };
 }
 
 declare interface DeleteFileResponse {
@@ -87,7 +104,7 @@ declare interface DeleteFileResponse {
 }
 
 declare interface TixteUser {
-  id: string,
-  username: string,
-  avatar: string,
+  id: string;
+  username: string;
+  avatar: string;
 }

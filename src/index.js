@@ -3,7 +3,8 @@ const { create } = require("axios").default;
 const FormData = require("form-data");
 
 // Constants
-const { BASE_URL, ACCOUNT_ENDPOINT, UPLOAD_ENDPOINT, FILE_ENDPOINT } = require("../constants/endpoints.json");
+const { BASE_URL, ACCOUNT_ENDPOINT, UPLOAD_ENDPOINT, FILE_ENDPOINT,
+    DOMAINS_ENDPOINT } = require("../constants/endpoints.json");
 
 // Config
 const axiosConfig = create({ baseURL: BASE_URL });
@@ -24,6 +25,15 @@ class Client {
      */
     async getAccountInfo() {
         const result = await get(ACCOUNT_ENDPOINT).catch(error => error.response);
+        return result.data;
+    }
+
+    /**
+     * [Account Token Only] Gets all domains registered by user
+     * @returns {DomainsResponse}
+     */
+    async getDomains() {
+        const result = await get(DOMAINS_ENDPOINT).catch(error => error.response);
         return result.data;
     }
 
