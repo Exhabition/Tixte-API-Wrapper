@@ -61,7 +61,7 @@ class Client {
         if (options && typeof options !== "object") return new TypeError(`[uploadFile] Expected 'options' to be an object, got ${typeof options}`);
 
         const formData = new FormData()
-        formData.append("file", buffer, `${options.filename || Date.now()}.${options.extension || "png"}`);
+        formData.append("file", buffer, `${options?.filename || Date.now()}.${options?.extension || "png"}`);
 
         const uploadResponse = await post(UPLOAD_ENDPOINT, formData, {
             headers: { ...formData.getHeaders(), domain },
