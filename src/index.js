@@ -64,6 +64,7 @@ class Client {
         formData.append("file", buffer, `${options?.filename || Date.now()}.${options?.extension || "png"}`);
 
         const uploadResponse = await post(UPLOAD_ENDPOINT, formData, {
+            params: { random_name: options?.filename ? false : true },
             headers: { ...formData.getHeaders(), domain },
         }).catch(error => error.response);
 
