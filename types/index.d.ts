@@ -2,20 +2,20 @@ declare module "tixte" {
   class Client {
     constructor(private apiKey: string);
 
-    getAccountInfo(): Promise<AccountDetails>;
-    getDomains(): Promise<DomainResponse>;
-    getSize(): Promise<SizeResponse>;
+    getAccountInfo(): Promise<AccountDetails | TixteError>;
+    getDomains(): Promise<DomainResponse | TixteError>;
+    getSize(): Promise<SizeResponse | TixteError>;
 
     uploadFile(
       buffer: Buffer,
       domain: string,
       options?: UploadOptions
-    ): Promise<UploadFileResponse>;
+    ): Promise<UploadFileResponse | TixteError>;
     updateFile(
       id: string,
       fileInfo: UpdateFileInfo
     ): Promise<UpdateFileResponse>;
-    deleteFile(id: string): Promise<DeleteFileResponse>;
+    deleteFile(id: string): Promise<DeleteFileResponse | TixteError>;
   }
 }
 
@@ -118,4 +118,12 @@ declare interface TixteUser {
   id: string;
   username: string;
   avatar: string;
+}
+
+declare interface TixteError {
+  success: boolean;
+  error: {
+    code: string;
+    message: string;
+  };
 }
