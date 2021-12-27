@@ -17,6 +17,10 @@ Initialize the client (replace YOUR_API_KEY with a valid API key of course)
 ```js
 const { Client } = require("tixte");
 const tixteClient = new Client(YOUR_API_KEY);
+
+// Already using a "Client" variable? Try exporting it under a custom name like this:
+const { Client : TixteClient } = require("tixte");
+const tixteClient = new TixteClient(YOUR_API_KEY);
 ```
 
 ## Supported functions
