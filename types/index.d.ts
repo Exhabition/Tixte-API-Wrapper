@@ -1,6 +1,8 @@
 declare module "tixte" {
   class Client {
-    constructor(private apiKey: string);
+    apiKey:string;
+    
+    constructor(apiKey: string);
 
     getAccountInfo(): Promise<AccountDetails | TixteError>;
     getDomains(): Promise<DomainResponse | TixteError>;
