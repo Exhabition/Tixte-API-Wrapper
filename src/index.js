@@ -4,7 +4,7 @@ const FormData = require("form-data");
 
 // Constants
 const { BASE_URL, ACCOUNT_ENDPOINT, UPLOAD_ENDPOINT, FILE_ENDPOINT,
-    DOMAINS_ENDPOINT, SIZE_ENDPOINT } = require("../constants/endpoints.json");
+    DOMAINS_ENDPOINT, SIZE_ENDPOINT, FILE_TYPES } = require("../constants/endpoints.json");
 
 // Config
 const axiosConfig = create({ baseURL: BASE_URL });
@@ -51,8 +51,9 @@ class Client {
      * @param {Object} options An object with optional settings
      * @param {String} domain The domain the image should be uploaded to
      * @param {Object} [options] Optional options to use while uploading the file
-     * @param {String} [options.filename = Date.now()] The filename to upload the file under
+     * @param {String} [options.filename = random_name] The filename to upload the file under
      * @param {String} [options.extension = png] The extension of the file
+     * @param {String} [options.private = false] The extension of the file
      * @returns {UploadFileResponse}
      */
     async uploadFile(buffer, domain, options) {
@@ -60,12 +61,18 @@ class Client {
         if (!domain || typeof domain !== "string") return new TypeError(`[uploadFile] Expected 'domain' to be a string, got ${typeof buffer}`);
         if (options && typeof options !== "object") return new TypeError(`[uploadFile] Expected 'options' to be an object, got ${typeof options}`);
 
+        const fileType = options?.private ? FILE_TYPES.PRIVATE : FILE_TYPES.PUBLIC;
         const formData = new FormData()
-        formData.append("file", buffer, `${options?.filename || Date.now()}.${options?.extension || "png"}`);
+        formData.append("file", buffer);
+        formData.append("payload_json", JSON.stringify({
+            name: `${options?.filename || Date.now()}.${options?.extension || "png"}`,
+            type: fileType,
+            domain,
+        }))
 
         const uploadResponse = await post(UPLOAD_ENDPOINT, formData, {
             params: { random_name: options?.filename ? false : true },
-            headers: { ...formData.getHeaders(), domain },
+            headers: { ...formData.getHeaders() },
         }).catch(error => error.response);
 
         return uploadResponse.data;
@@ -76,6 +83,7 @@ class Client {
      * @param {Object} fileInfo The new file information
      * @param {String} [fileInfo.name] Updated name of the file
      * @param {String} [fileInfo.extension] Updated extension of the file
+     * @param {String} [fileInfo.private = false] The extension of the file
      * @returns {UpdateFileResponse}
      */
     async updateFile(id, fileInfo) {
@@ -84,7 +92,11 @@ class Client {
         if (fileInfo.name && typeof fileInfo.name !== "string") return new TypeError(`[updateFile] Expected 'fileInfo.name' to be a string, got ${typeof buffer}`);
         if (fileInfo.extension && typeof fileInfo.extension !== "string") return new TypeError(`[updateFile] Expected 'fileInfo.extension' to be a string, got ${typeof buffer}`);
 
-        const uploadResponse = await patch(`${FILE_ENDPOINT}/${id}`, fileInfo).catch(error => error.response);
+        const fileType = fileInfo?.private ? FILE_TYPES.PRIVATE : FILE_TYPES.PUBLIC;
+        const { name, extension } = fileInfo;
+        const updatedFile = { name, extension, type: fileType };
+
+        const uploadResponse = await patch(`${FILE_ENDPOINT}/${id}`, updatedFile).catch(error => error.response);
         return uploadResponse.data;
     }
 

@@ -5,5 +5,10 @@
     "UPLOAD_ENDPOINT": "/upload",
     "FILE_ENDPOINT": "/users/@me/uploads",
     "DOMAINS_ENDPOINT": "/users/@me/domains",
-    "SIZE_ENDPOINT": "/users/@me/uploads/size"
+    "SIZE_ENDPOINT": "/users/@me/uploads/size",
+
+    "FILE_TYPES": {
+        "PUBLIC": 1,
+        "PRIVATE": 2
+    }
 }

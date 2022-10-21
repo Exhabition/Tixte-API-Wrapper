@@ -65,11 +65,13 @@ declare interface SizeResponse {
 declare interface UploadOptions {
   extension: string;
   filename: string;
+  private?: boolean;
 }
 
 declare interface UpdateFileInfo {
   name?: string;
   extension?: string;
+  private?: boolean;
 }
 
 declare interface UploadFileResponse {
