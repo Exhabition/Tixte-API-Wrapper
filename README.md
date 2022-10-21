@@ -33,7 +33,7 @@ await tixteClient.getUserInfo();
 ```
 
 ```js
-// Get user registered domains (not support with API key, use an account token instead)
+// Get user registered domains (not supported with API key, use an account token instead)
 await tixteClient.getDomains();
 ```
 
@@ -46,7 +46,7 @@ File related:
 
 ```js
 // Uploading a buffer to Tixte
-await tixteClient.uploadFile(buffer, domain, { filename, extension });
+await tixteClient.uploadFile(buffer, domain, { filename, extension, private? });
 ```
 
 ```js
